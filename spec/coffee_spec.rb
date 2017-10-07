@@ -50,4 +50,14 @@ describe 'a cup of coffee' do
       expect(coffee.cost).to eq(3.00)
     end
   end
+
+  it 'is light in colour' do
+    pending 'colour not implemented yet'
+    expect(coffee.colour).to be(:light)
+  end
+
+  it 'is cooler than 200 degrees Fahrenheit' do
+    pending 'temperature not implemented yet'
+    expect(coffee.temperature).to_be < (200)
+  end
 end
