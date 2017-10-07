@@ -1,25 +1,37 @@
 # coffe class
-Coffee = Struct.new(:cost, :add) do
+Coffee = Struct.new(:cost, :add, :colour, :temperature) do
   STANDARD_COST = 1
 
   def cost
-    STANDARD_COST.to_f + ingredients.inject(:+).to_f
+    extras = 0.0
+    if ingredients && ingredients[:milk]
+      extras = ingredients[:milk].to_f
+    end
+    STANDARD_COST.to_f + extras
   end
 
   def add(ingredient)
+    @ingredients ||= {}
     if ingredient == :milk
-      extras(0.25)
+      if  @ingredients[:milk]
+        @ingredients[:milk] += 0.25
+      else
+       @ingredients.merge!(milk: 0.25)
+     end
     end
   end
 
-  def extras(toppings)
-    @ingredients ||= []
-    @ingredients << toppings
+  def ingredients
+    @ingredients ||= {}
+    @ingredients
   end
 
-  def ingredients
-    @ingredients ||= []
-    @ingredients
+  def colour
+    ingredients[:milk] ? :light : :dark
+  end
+
+  def temperature
+    ingredients[:milk] ? 180 : 210
   end
 end
 
@@ -34,6 +46,14 @@ describe 'a cup of coffee' do
     before { coffee.add(:milk) }
     it 'costs 1.25£' do
       expect(coffee.cost).to eq(1.25)
+    end
+
+    it 'is light in colour' do
+      expect(coffee.colour).to be(:light)
+    end
+
+    it 'is cooler than 200 degrees Fahrenheit' do
+      expect(coffee.temperature).to be < (200)
     end
   end
 
@@ -51,13 +71,4 @@ describe 'a cup of coffee' do
     end
   end
 
-  it 'is light in colour' do
-    pending 'colour not implemented yet'
-    expect(coffee.colour).to be(:light)
-  end
-
-  it 'is cooler than 200 degrees Fahrenheit' do
-    pending 'temperature not implemented yet'
-    expect(coffee.temperature).to_be < (200)
-  end
 end
