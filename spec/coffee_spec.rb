@@ -43,4 +43,11 @@ describe 'a cup of coffee' do
       expect(coffee.cost).to eq(1.50)
     end
   end
+
+  context 'with some new ingredients' do
+    it 'costs 3.00£' do
+      pending 'new ingredients not implemented yet'
+      expect(coffee.cost).to eq(3.00)
+    end
+  end
 end
