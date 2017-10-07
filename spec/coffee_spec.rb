@@ -4,7 +4,7 @@ Coffee = Struct.new(:cost, :add, :colour, :temperature) do
 
   def cost
     extras = 0.0
-    if ingredients && ingredients[:milk]
+    if ingredients[:milk]
       extras = ingredients[:milk].to_f
     end
     STANDARD_COST.to_f + extras
